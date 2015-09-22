@@ -8,6 +8,8 @@ include RandomData
      title:  RandomData.random_sentence,
      body:   RandomData.random_paragraph
    )
+
+      Post.find_or_create_by(title: "This is a unique Post title", body: "This is a unique Post body")
  end
  posts = Post.all
 
@@ -19,6 +21,7 @@ include RandomData
      post: posts.sample,
      body: RandomData.random_paragraph
    )
+   Comment.find_or_create_by(body: "This is a unique comment body")
  end
 
  puts "Seed finished"
