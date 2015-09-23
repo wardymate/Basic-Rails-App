@@ -34,12 +34,24 @@ include RandomData
      price:  RandomData.random_integer
 
    )
-
-      Advertisement.find_or_create_by(title: "This is a unique Advertisement title", copy: "This is a unique Advertisement copy", price: "This is a unique Advertisement price")
  end
  advertisements = Advertisement.all
+
+ # Create Questions
+ 10.times do
+ # #1
+   Question.create!(
+ # #2
+     title:  RandomData.random_sentence,
+     body:   RandomData.random_paragraph,
+     resolved:  RandomData.random_boolean
+
+   )
+ end
+ questions = Question.all
 
  puts "Seed finished"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
  puts "#{Advertisement.count} advertisements created"
+ puts "#{Question.count} questions created"
