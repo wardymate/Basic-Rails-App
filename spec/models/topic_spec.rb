@@ -6,7 +6,13 @@ RSpec.describe Topic, type: :model do
 
   it { should have_many(:posts) }
   it { should have_many(:sponsored_posts) }
-# #1
+
+  it { should validate_presence_of(:name) }
+  it { should validate_presence_of(:description) }
+
+  it { should validate_length_of(:name).is_at_least(5) }
+  it { should validate_length_of(:description).is_at_least(15) }
+
   describe "attributes" do
     it "should respond to name" do
       expect(topic).to respond_to(:name)
