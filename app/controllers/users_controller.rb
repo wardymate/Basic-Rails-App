@@ -21,4 +21,20 @@ class UsersController < ApplicationController
       render :new
     end
   end
+
+  def confirm
+  # #9
+    @user = User.new
+    @user.name = params[:user][:name]
+    @user.email = params[:user][:email]
+    @user.password = params[:user][:password]
+    @user.password_confirmation = params[:user][:password_confirmation]
+
+    # if @user.save
+    #   redirect_to users_confirm_path
+    # else
+    #   flash[:error] = "There was an error creating your account. Please try again."
+    #   render :new
+    # end
+  end
 end
