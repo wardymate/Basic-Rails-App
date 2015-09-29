@@ -5,15 +5,11 @@ RSpec.describe User, type: :model do
    # Shoulda tests for name
    it { should validate_presence_of(:name) }
    it { should validate_length_of(:name).is_at_least(1) }
-   it { should allow_value("Bloccit User").for(:name) }
-   it { should_not allow_value("bloccituser").for(:name) }
-   it { should_not allow_value("BloccitUser").for(:name) }
-
 
    # Shoulda tests for email
    it { should validate_presence_of(:email) }
    it {
-      allow(user).to receive(:capitalize_name) 
+      allow(user).to receive(:capitalize_name)
       should validate_uniqueness_of(:email)
    }
    it { should validate_length_of(:email).is_at_least(3) }
@@ -34,6 +30,12 @@ RSpec.describe User, type: :model do
        expect(user).to respond_to(:email)
      end
    end
+
+   describe "name" do
+   it "should be capitalized" do
+     expect(user.name).to eq("Bloccit User")
+  end
+end
 
    describe "invalid user" do
     let(:user_with_invalid_name) { User.new(name: "", email: "user@bloccit.com") }
