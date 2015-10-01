@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
   has_many :posts
   before_save :downcase_email
   before_save :capitalize_name
+  before_save { self.role ||= :member }
 
 
   EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
@@ -22,6 +23,8 @@ class User < ActiveRecord::Base
             format: { with: EMAIL_REGEX }
 
   has_secure_password
+
+  enum role: [:member, :admin]
 
 def downcase_email
   self.email = email.downcase
