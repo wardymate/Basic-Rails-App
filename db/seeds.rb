@@ -38,37 +38,12 @@ topics = Topic.all
  100.times do
    Comment.create!(
  # #4
+     user: users.sample,
      post: posts.sample,
      body: RandomData.random_paragraph
    )
    Comment.find_or_create_by(body: "This is a unique comment body")
  end
-
- # Create Advertisements
- 10.times do
- # #1
-   Advertisement.create!(
- # #2
-     title:  RandomData.random_sentence,
-     copy:   RandomData.random_paragraph,
-     price:  RandomData.random_integer
-
-   )
- end
- advertisements = Advertisement.all
-
- # Create Questions
- 10.times do
- # #1
-   Question.create!(
- # #2
-     title:  RandomData.random_sentence,
-     body:   RandomData.random_paragraph,
-     resolved:  RandomData.random_boolean
-
-   )
- end
- questions = Question.all
 
  admin = User.create!(
    name:     'Admin User',
@@ -89,5 +64,3 @@ topics = Topic.all
  puts "#{User.count} users created"
  puts "#{Post.count} posts created"
  puts "#{Comment.count} comments created"
- puts "#{Advertisement.count} advertisements created"
- puts "#{Question.count} questions created"
