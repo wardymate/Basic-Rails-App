@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :posts
-  has_many :comments
+  has_many :posts, dependent: :destroy
+  has_many :comments, dependent: :destroy
+  has_many :votes, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   before_save :downcase_email
   before_save :capitalize_name
   before_save { self.role ||= :member }
@@ -34,6 +36,10 @@ end
 def capitalize_name
   return if name.split.length <=  1
   self.name = (name.split.each do |x| x.capitalize! end).join(' ')
+end
+
+def favorite_for(post)
+  favorites.where(post_id: post.id).first
 end
 
 end
