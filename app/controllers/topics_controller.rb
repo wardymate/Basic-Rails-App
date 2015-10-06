@@ -1,4 +1,5 @@
 class TopicsController < ApplicationController
+  @@rates_available = ["PG", "PG13", "R"]
 
   before_action :require_sign_in, except: [:index, :show]
   before_action :authorize_user, except: [:index, :show]
@@ -19,6 +20,9 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     if @topic.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
+      if rates_available.include?(params[:topic][:rates])
+        @topic.rates = params[:topic][:rates]
+      end
       redirect_to @topic, notice: "Topic was saved successfully."
     else
       flash[:error] = "Error creating topic. Please try again."
@@ -36,6 +40,7 @@ class TopicsController < ApplicationController
     @topic.assign_attributes(topic_params)
     if @topic.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
+      @topic.update_rating(params[:topic][:rates])
       flash[:notice] = "Topic was updated."
       redirect_to @topic
     else
