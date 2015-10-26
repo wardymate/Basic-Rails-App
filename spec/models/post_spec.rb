@@ -90,10 +90,26 @@ RSpec.describe Post, type: :model do
 
     describe "create_favorite" do
 
+      it "Automatically creates a favorite for the post and user, once the post is created" do
+        expect(post).to receive(:create_favorite).at_least(:once)
+        post.send(:create_favorite)
+      end
       it "creates a favorite for the post and user" do
-       favorite = user.favorites.create(post: post)
-       favorite.save
+        old_favorite_count = Favorite.count
+        post.send(:create_favorite)
+        expect(Favorite.count).to eq(old_favorite_count + 1)
       end
     end
+
+    describe "send_new_post_email" do
+      it "triggers an after_create callback called send_new_post_email" do
+        expect(post).to receive(:send_new_post_email).at_least(:once)
+        post.send(:send_new_post_email)
+      end
+       it "sends an email to users when they create a new post" do
+         expect(FavoriteMailer).to receive(:new_post).with(user, post).and_return(double(deliver_now: true))
+         post.save
+       end
+     end
   end
 end
