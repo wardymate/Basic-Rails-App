@@ -9,6 +9,7 @@ class Post < ActiveRecord::Base
   after_create :create_vote
   after_create :create_favorite
   default_scope { order('rank DESC') }
+  scope :visible_to, -> (user) { user ? all : joins(:topic).where('topics.public' => true) }
 
 
   validates :title, length: { minimum: 5 }, presence: true

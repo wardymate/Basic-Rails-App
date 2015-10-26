@@ -20,9 +20,9 @@ class TopicsController < ApplicationController
     @topic = Topic.new(topic_params)
     if @topic.save
       @topic.labels = Label.update_labels(params[:topic][:labels])
-      if rates_available.include?(params[:topic][:rates])
-        @topic.rates = params[:topic][:rates]
-      end
+      # if rates_available.include?(params[:topic][:rates])
+      #   @topic.rates = params[:topic][:rates]
+      # end
       redirect_to @topic, notice: "Topic was saved successfully."
     else
       flash[:error] = "Error creating topic. Please try again."
